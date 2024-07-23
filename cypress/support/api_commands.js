@@ -12,69 +12,79 @@ Cypress.Commands.add("api_createProject", (project) => {
     headers: { Authorization: accessToken },
   });
 });
-Cypress.Commands.add('api_getAllProjects', () => {
+Cypress.Commands.add("api_getAllProjects", () => {
   cy.request({
-    method: 'GET',
-    url: '/api/v4/projects/',
+    method: "GET",
+    url: "/api/v4/projects/",
     headers: { Authorization: accessToken },
-  })
-})
+  });
+});
 
-Cypress.Commands.add('api_consoleAllProjects',()=>{
+Cypress.Commands.add("api_consoleAllProjects", () => {
   cy.request({
-    method:"GET",
-    url: '/api/v4/projects/',
+    method: "GET",
+    url: "/api/v4/projects/",
     headers: { Authorization: accessToken },
-  }).then((res)=>{
+  }).then((res) => {
     console.log(res);
-  })
-})
+  });
+});
 
-Cypress.Commands.add('api_getOne', (id) => {
+Cypress.Commands.add("api_getOne", (id) => {
   cy.request({
-    method: 'GET',
+    method: "GET",
     url: `/api/v4/projects/${id}`,
     headers: { Authorization: accessToken },
-  })
-})
+  });
+});
 //DELETAR
-Cypress.Commands.add('api_deleteProjects', () => {
-  cy.api_getAllProjects().then(res =>
-    res.body.forEach(project => cy.request({
-      method: 'DELETE',
-      url: `/api/v4/projects/${project.id}`,
-      headers: { Authorization: accessToken },
-    }))
-  )
-})
-
-/// Comandos Sobre ISSUE
-Cypress.Commands.add('api_createIssue', issue => {
-  cy.api_createProject(issue.project)
-    .then(response => {
+Cypress.Commands.add("api_deleteProjects", () => {
+  cy.api_getAllProjects().then((res) =>
+    res.body.forEach((project) =>
       cy.request({
-        method: 'POST',
-        url: `/api/v4/projects/${response.body.id}/issues`,
-        body: {
-          title: issue.title,
-          description: issue.description
-        },
+        method: "DELETE",
+        url: `/api/v4/projects/${project.id}`,
         headers: { Authorization: accessToken },
       })
-  })
-})
+    )
+  );
+});
 
+/// Comandos Sobre ISSUE
+Cypress.Commands.add("api_createIssue", (issue) => {
+  cy.api_createProject(issue.project).then((response) => {
+    cy.request({
+      method: "POST",
+      url: `/api/v4/projects/${response.body.id}/issues`,
+      body: {
+        title: issue.title,
+        description: issue.description,
+      },
+      headers: { Authorization: accessToken },
+    });
+  });
+});
 
 /// Comandos Sobre LABEL
 
-Cypress.Commands.add('api_createLabel', (projectId, label) => {
+Cypress.Commands.add("api_createLabel", (projectId, label) => {
   cy.request({
-    method: 'POST',
+    method: "POST",
     url: `/api/v4/projects/${projectId}/labels`,
     body: {
       name: label.name,
-      color: label.color
+      color: label.color,
     },
+    headers: { Authorization: accessToken },
+  });
+});
+
+/// Comandos SOBRE MILESTONE
+Cypress.Commands.add('api_createMilestone', (projectId, milestone) => {
+  cy.request({
+    method: 'POST',
+    url: `/api/v4/projects/${projectId}/milestones`,
+    body: { title: milestone.title },
     headers: { Authorization: accessToken },
   })
 })
