@@ -14,6 +14,7 @@ describe("Create Issue", () => {
 
   beforeEach(() => {
     cy.login();
+    cy.api_deleteProjects();
     cy.gui_createProject(issue.project);
   });
 
@@ -23,5 +24,6 @@ describe("Create Issue", () => {
     cy.get(".issue-details")
       .should("contain", issue.title)
       .and("contain", issue.description);
+    cy.api_deleteProjects();
   });
 });
