@@ -12,6 +12,7 @@ Cypress.Commands.add("api_createProject", (project) => {
     headers: { Authorization: accessToken },
   });
 });
+
 Cypress.Commands.add("api_getAllProjects", () => {
   cy.request({
     method: "GET",
@@ -37,6 +38,7 @@ Cypress.Commands.add("api_getOne", (id) => {
     headers: { Authorization: accessToken },
   });
 });
+
 //DELETAR
 Cypress.Commands.add("api_deleteProjects", () => {
   cy.api_getAllProjects().then((res) =>
