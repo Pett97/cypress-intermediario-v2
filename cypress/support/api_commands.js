@@ -20,6 +20,16 @@ Cypress.Commands.add('api_getAllProjects', () => {
   })
 })
 
+Cypress.Commands.add('api_consoleAllProjects',()=>{
+  cy.request({
+    method:"GET",
+    url: '/api/v4/projects/',
+    headers: { Authorization: accessToken },
+  }).then((res)=>{
+    console.log(res);
+  })
+})
+
 Cypress.Commands.add('api_getOne', (id) => {
   cy.request({
     method: 'GET',
@@ -27,7 +37,7 @@ Cypress.Commands.add('api_getOne', (id) => {
     headers: { Authorization: accessToken },
   })
 })
-
+//DELETAR
 Cypress.Commands.add('api_deleteProjects', () => {
   cy.api_getAllProjects().then(res =>
     res.body.forEach(project => cy.request({
@@ -51,5 +61,20 @@ Cypress.Commands.add('api_createIssue', issue => {
         },
         headers: { Authorization: accessToken },
       })
+  })
+})
+
+
+/// Comandos Sobre LABEL
+
+Cypress.Commands.add('api_createLabel', (projectId, label) => {
+  cy.request({
+    method: 'POST',
+    url: `/api/v4/projects/${projectId}/labels`,
+    body: {
+      name: label.name,
+      color: label.color
+    },
+    headers: { Authorization: accessToken },
   })
 })

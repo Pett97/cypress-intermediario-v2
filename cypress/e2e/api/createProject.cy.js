@@ -15,6 +15,7 @@ describe("Create Project API", () => {
     });
   });
   it("Clear Tests", () => {
+    cy.api_consoleAllProjects();
     cy.api_getAllProjects().then((res) => {
       res.body.forEach((project) => {
         console.log(project.id);
